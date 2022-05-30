@@ -38,9 +38,15 @@ async function run (){
                         const inventories = await inventoriesCollection.findOne(query)
                         res.send(inventories)
               })
+         
+            // app.get('/inventories/:email', async (req, res) => {
+            //     const email =  req.params.email
+            //     const query = {email: email};
+            //     const products = await inventoriesCollection.find(query).toArray();
+            //     res.send(products);
+            // })
 
-            //   delete inventories
-
+      
             app.delete('/inventories/:id', async (req, res) => {
                 const id = req.params.id;
                 const query = {_id: ObjectId(id)}
@@ -63,24 +69,8 @@ async function run (){
         const result = await inventoriesCollection.updateOne(filter, update, options);
         res.send({ success: 'Your Deliver was SuccessFul' })
       })
-    // update Quentity to decrease
-    app.put('/inventory/:id', async (req, res) => {
-        const id = req.params
-       
-        const body = req.body
-       
-        const filter = {_id: ObjectId(id) }
-        const options = { upsert: true };
-        const update = {
-          $set: {
-            qauantity: body.newQuantity
-  
-          }
-        }
-        const result = await inventoriesCollection.updateOne(filter, update, options);
-        res.send({ success: 'Your added  SuccessFully' })
-      })
-
+    
+   
     //   add new items
 
 
