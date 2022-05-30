@@ -17,12 +17,19 @@ async function run (){
           try{
               await client.connect();
               const inventoriesCollection = client.db('motoDeal').collection('inventories');
+            //   const orderCollection = client.db('motoDeal').collection('orders');
               app.get('/inventories', async (req, res)=> {
                     const query = {};
                     const cursor = inventoriesCollection.find(query);
                     const allInventories = await cursor.toArray();
                     res.send(allInventories);
                     console.log('db connected')
+              })
+              app.post('/inventories', async (req, res)=> {
+                   newInventories = req.body
+                    const result = await inventoriesCollection.insertOne(newInventories)
+                    res.send(result);
+                  
               })
 
               app.get('/inventories/:id', async (req, res)=> {
@@ -73,6 +80,10 @@ async function run (){
         const result = await inventoriesCollection.updateOne(filter, update, options);
         res.send({ success: 'Your added  SuccessFully' })
       })
+
+    //   add new items
+
+
           }
           finally{
 
